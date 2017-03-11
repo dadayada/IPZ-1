@@ -1,0 +1,22 @@
+
+# Compiled source #
+###################
+target/
+
+
+## Intellij ###
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm
+
+## Directory-based project format
+.idea/
+
+
+## Maven generated files
+.classpath.txt
+
+## File-based project format
+
+*.iml
+
+
+
