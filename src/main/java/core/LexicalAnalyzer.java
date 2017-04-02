@@ -1,35 +1,30 @@
-import org.w3c.dom.Attr;
+package core;
+
+
+import DTO.LexicalAnalyzerOutput;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by pc on 10.03.2017.
- */
 public class LexicalAnalyzer {
 
     private Tables tables;
-
-    private Reader reader;
 
     private ArrayList<Token> tokens;
 
     private ArrayList<LexicalError> errors;
 
-    public LexicalAnalyzer(Reader reader) {
-        this.reader = reader;
+    public LexicalAnalyzer() {}
+
+    public LexicalAnalyzerOutput scan(Reader reader) throws IOException {
         tables = new Tables();
         tokens = new ArrayList<>();
         errors = new ArrayList<>();
-    }
-
-    public List<Token> scan() throws IOException {
         int symbol;
         int row = 0;
         int column = 0;
-        ArrayList<Token> tokens = new ArrayList<>();
         symbol = reader.read();
         do {
             int tokenCode = -1;
@@ -92,6 +87,7 @@ public class LexicalAnalyzer {
                         } else
                             column++;
                         errors.add(new LexicalError("Expected '*'", row, column));
+                        supressOutput = true;
                         break;
                     } else {
                         symbol = reader.read();
@@ -104,11 +100,13 @@ public class LexicalAnalyzer {
                                     column++;
                                 symbol = reader.read();
                             }
-                            if(symbol == -1)
+                            if(symbol == -1) {
                                 errors.add(new LexicalError("Expected '*'", row, column));
+                                supressOutput = true;
+                            }
                             else
                                 symbol = reader.read();
-                        } while ((char) symbol != ')');
+                        } while ((char) symbol != ')' && symbol != -1);
                         if((char) symbol == ')') {
                             supressOutput = true;
                             column++;
@@ -119,6 +117,7 @@ public class LexicalAnalyzer {
                     break;
                 case INVALID:
                     errors.add(new LexicalError("Illegal symbol", row, column));
+                    supressOutput = true;
                     symbol = reader.read();
             }
             if(!supressOutput) {
@@ -126,6 +125,6 @@ public class LexicalAnalyzer {
                 column += tokenLength;
             }
         } while (symbol != -1);
-        return tokens;
+        return new LexicalAnalyzerOutput(tables, tokens, errors);
     }
 }

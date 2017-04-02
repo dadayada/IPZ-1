@@ -1,6 +1,5 @@
-/**
- * Created by pc on 11.03.2017.
- */
+package core;
+
 public class Token {
 
     private final int code;
@@ -29,6 +28,6 @@ public class Token {
 
     @Override
     public String toString() {
-        return "row: " + this.row + ", column: " + this.column + ", code " + this.code;
+        return "(row: " + this.row + ", column: " + this.column + ", code " + this.code + ")";
     }
 }

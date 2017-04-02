@@ -1,9 +1,9 @@
+package core;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
-/**
- * Created by pc on 11.03.2017.
- */
 public class Tables {
 
     private static final Map<String, Integer> reservedWords;
@@ -94,5 +94,23 @@ public class Tables {
     public int putConstant(String constant) {
         constants.put(constant, curConstantCode);
         return curConstantCode++;
+    }
+
+    public String identidiersToString() {
+        String identifiers = "";
+        Set<Map.Entry<String, Integer>> entries = this.identifiers.entrySet();
+        for(Map.Entry<String, Integer> entry: entries) {
+            identifiers += "value: " + entry.getKey() + ", code: " + entry.getValue() + '\n';
+        }
+        return identifiers;
+    }
+
+    public String constantsTostring() {
+        String constants = "";
+        Set<Map.Entry<String, Integer>> entries = this.constants.entrySet();
+        for(Map.Entry<String, Integer> entry: entries) {
+            constants += "value: " + entry.getKey() + ", code: " + entry.getValue() + '\n';
+        }
+        return constants;
     }
 }
