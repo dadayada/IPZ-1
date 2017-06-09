@@ -1,0 +1,14 @@
+PROGRAM okprogc ;
+LABEL 2, 4, 5;
+BEGIN
+GOTO 5;
+5: IF apple = 5
+	THEN
+		GOTO 5;
+		IF dodik = 12 THEN
+		GOTO 5;
+		ENDIF;
+	ELSE
+		GOTO 5;
+ENDIF;
+END.
